@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, ArrowUp, BookOpen, MessageCircle, Smile, Frown, Angry } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { mockNewsData } from "@/data/mockNewsData";
 
 interface DadAvatarProps {
   isVisible: boolean;
@@ -60,9 +62,11 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   const [eyebrowRaise, setEyebrowRaise] = useState(0);
   const [shouldShake, setShouldShake] = useState(false);
   const [bellRing, setBellRing] = useState(false);
+  const [articleId, setArticleId] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const naggingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const naggingCountRef = useRef(0);
+  const navigate = useNavigate();
 
   // Blinking effect
   useEffect(() => {
@@ -90,14 +94,14 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
     }
   }, [isVisible, isHidden, mood]);
 
-  // Nagging effect if user hasn't interacted
+  // Nagging effect if user hasn't interacted - increased intensity and frequency
   useEffect(() => {
     if (isVisible && !isHidden && !reacted) {
       naggingTimeoutRef.current = setTimeout(() => {
         if (!reacted) {
           naggingCountRef.current += 1;
           
-          if (naggingCountRef.current > 3) {
+          if (naggingCountRef.current > 2) {
             setMood("angry");
             setShouldShake(true);
             setBellRing(true);
@@ -118,7 +122,7 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
           setIsAnimating(true);
           setTimeout(() => setIsAnimating(false), 500);
         }
-      }, 8000);
+      }, 5000); // Reduced time to 5 seconds for more frequent nagging
       
       return () => {
         if (naggingTimeoutRef.current) clearTimeout(naggingTimeoutRef.current);
@@ -133,6 +137,15 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
       setReacted(false);
       setMood("neutral");
       naggingCountRef.current = 0;
+      
+      // Extract article ID from suggestion if possible
+      const articleTitle = suggestion.match(/"([^"]+)"/)?.[1];
+      if (articleTitle) {
+        const article = mockNewsData.find(item => item.title === articleTitle);
+        if (article) {
+          setArticleId(article.id);
+        }
+      }
       
       // Add animation when appearing
       setIsAnimating(true);
@@ -173,15 +186,22 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
     setIsAnimating(true);
     setTimeout(() => setIsAnimating(false), 500);
     
-    setTimeout(() => {
-      onAction("ignore"); // This will hide the avatar after a delay
-    }, 3000);
+    // Navigate to article page if article ID is available
+    if (articleId) {
+      setTimeout(() => {
+        navigate(`/article/${articleId}`);
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        onAction("ignore"); // This will hide the avatar after a delay
+      }, 3000);
+    }
   };
 
   const handleIgnore = () => {
     if (naggingTimeoutRef.current) clearTimeout(naggingTimeoutRef.current);
     
-    onAction("ignore");
+    // Don't actually hide dad, just make him react
     setReacted(true);
     
     // If dad was already angry, make him angrier
@@ -195,6 +215,19 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
     
     const negativeReaction = dadReactions.negative[Math.floor(Math.random() * dadReactions.negative.length)];
     setReaction(negativeReaction);
+    
+    // Start nagging again after a short delay
+    setTimeout(() => {
+      setReacted(false);
+      naggingCountRef.current += 1; // Increase nagging counter to make him more insistent
+      
+      // Re-appear with a more insistent message
+      const naggingPrompts = dadPrompts.slice(5);
+      const randomNaggingPrompt = naggingPrompts[Math.floor(Math.random() * naggingPrompts.length)];
+      setPrompt(randomNaggingPrompt + " PLEASE READ THIS!");
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 500);
+    }, 3000);
   };
 
   if (isHidden) return null;
@@ -237,7 +270,7 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
               )}
               
               <div 
-                className={`dad-animated-face w-16 h-16 bg-yellow-200 rounded-full relative ${isBlinking ? "dad-blink" : ""}`}
+                className={`dad-animated-face w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full relative ${isBlinking ? "dad-blink" : ""}`}
                 style={{ 
                   boxShadow: "0 3px 10px rgba(0,0,0,0.2)",
                   border: "2px solid #000",
@@ -368,7 +401,7 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
                     </motion.button>
                     <motion.button 
                       onClick={handleIgnore}
-                      className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-gray-100 transition-colors flex items-center gap-1"
+                      className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-1"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >

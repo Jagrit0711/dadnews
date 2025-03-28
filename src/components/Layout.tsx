@@ -100,13 +100,8 @@ export function Layout({ children }: LayoutProps) {
       
       setUserEngagement(prev => Math.min(prev + 5, 100));
     } else {
+      // When ignoring, don't hide dad avatar completely - handled within DadAvatar component
       setUserEngagement(prev => Math.max(prev - 5, 0));
-      setShowDadAvatar(false);
-      
-      // Add a cooldown before showing again
-      setTimeout(() => {
-        setShowCount(prev => Math.max(prev - 1, 0));
-      }, 30000);
     }
   };
 
