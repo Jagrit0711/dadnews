@@ -23,10 +23,7 @@ export function NewsFeed({ category, onArticleRead }: NewsFeedProps) {
 
   const handleReadMore = (newsId: string) => {
     onArticleRead(newsId);
-    
-    // In a real app, we would navigate to the article page
-    // For now, let's just show an alert
-    alert(`Reading article: ${newsId}`);
+    // Removed the alert
   };
 
   return (

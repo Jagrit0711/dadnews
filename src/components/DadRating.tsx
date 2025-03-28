@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { ThumbsUp, ThumbsDown, Wrench } from "lucide-react";
 
@@ -31,7 +30,7 @@ export function DadRating({ articleId }: DadRatingProps) {
     const totalVotes = randomThumbsUp + randomTools - randomThumbsDown;
     setApproved(totalVotes > 20);
   }, [articleId]);
-
+  
   const handleRate = (value: number) => {
     if (rating === value) {
       setRating(null);
@@ -48,7 +47,7 @@ export function DadRating({ articleId }: DadRatingProps) {
       // Add new vote
       setRating(value);
       if (value === 1) setTotal(prev => ({ ...prev, thumbsUp: prev.thumbsUp + 1 }));
-      else if (value === -1) setTotal(prev => ({ ...prev, thumbsDown: prev.thumbsDown - 1 }));
+      else if (value === -1) setTotal(prev => ({ ...prev, thumbsDown: prev.thumbsDown + 1 }));
       else setTotal(prev => ({ ...prev, tools: prev.tools + 1 }));
     }
   };
@@ -56,7 +55,6 @@ export function DadRating({ articleId }: DadRatingProps) {
   return (
     <div className="flex items-center">
       <div className="mr-4">
-        <div className="text-sm font-medium mb-1">Dad Approval Rating:</div>
         <span className={`inline-block px-2 py-1 text-xs font-brutalist rounded-brutalist ${approved ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
           {approved ? 'DAD APPROVED' : 'NEEDS WORK'}
         </span>

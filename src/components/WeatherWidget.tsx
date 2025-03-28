@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Sun, CloudSun, CloudRain, CloudSnow, CloudFog } from "lucide-react";
@@ -56,8 +55,13 @@ export function WeatherWidget() {
   const [weather, setWeather] = useState<typeof weatherTypes[0]>(weatherTypes[0]);
   const [phrase, setPhrase] = useState<string>("");
   const [temperature, setTemperature] = useState<number>(72);
+  const [isCompact, setIsCompact] = useState(false);
   
   useEffect(() => {
+    // Check if this widget is in the header (by checking parent elements)
+    const isInHeader = document.querySelector('header .weather-widget') !== null;
+    setIsCompact(isInHeader);
+    
     // Simulate fetching weather data
     const randomIndex = Math.floor(Math.random() * weatherTypes.length);
     const selectedWeather = weatherTypes[randomIndex];
@@ -73,8 +77,19 @@ export function WeatherWidget() {
 
   const WeatherIcon = weather.icon;
 
+  // Compact version for header
+  if (isCompact) {
+    return (
+      <div className="weather-widget flex items-center bg-card rounded-brutalist px-3 py-1 border border-brutalist">
+        <WeatherIcon className="text-brutalist mr-2" size={18} />
+        <span className="font-brutalist">{temperature}°F</span>
+      </div>
+    );
+  }
+
+  // Regular version for sidebar
   return (
-    <Card className="p-4 rounded-brutalist border-2 border-brutalist shadow-brutalist bg-gradient-to-b from-card to-secondary/80">
+    <Card className="weather-widget p-4 rounded-brutalist border-2 border-brutalist shadow-brutalist bg-gradient-to-b from-card to-secondary/80">
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-brutalist text-xl">Dad Weather Report</h3>
         <WeatherIcon className="text-brutalist" size={28} />

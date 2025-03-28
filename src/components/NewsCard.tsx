@@ -35,7 +35,7 @@ export function NewsCard({ news, onReadMore }: NewsCardProps) {
       <h2 className="text-xl font-brutalist mb-2">{news.title}</h2>
       <p className="text-sm mb-4 flex-grow">{news.summary}</p>
       
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
         <DadRating articleId={news.id} />
         <ShareButtons article={news} />
       </div>
