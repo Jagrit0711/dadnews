@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface DadAvatarProps {
   isVisible: boolean;
@@ -38,6 +39,7 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   const [mood, setMood] = useState<"happy" | "sad" | "neutral">("neutral");
   const [isBlinking, setIsBlinking] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [headTilt, setHeadTilt] = useState(0);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Blinking effect
@@ -49,6 +51,17 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
       }, 4000);
       
       return () => clearInterval(blinkInterval);
+    }
+  }, [isVisible, isHidden]);
+
+  // Random head tilt
+  useEffect(() => {
+    if (isVisible && !isHidden) {
+      const tiltInterval = setInterval(() => {
+        setHeadTilt(Math.random() * 10 - 5);
+      }, 5000);
+      
+      return () => clearInterval(tiltInterval);
     }
   }, [isVisible, isHidden]);
 
@@ -111,41 +124,88 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   if (isHidden) return null;
 
   return (
-    <div className={`dad-avatar ${!isVisible ? "hidden" : ""} ${isAnimating ? "dad-pop" : ""}`}>
-      <div className="flex items-start">
-        <div className="mr-3 flex-shrink-0">
-          <div className={`dad-animated-face w-12 h-12 ${isBlinking ? "dad-blink" : ""}`}>
-            <div className="dad-avatar-eyes">
-              <div className="dad-avatar-eye"></div>
-              <div className="dad-avatar-eye"></div>
-            </div>
-            <div className={`dad-avatar-mouth ${mood}`}></div>
-          </div>
-        </div>
-        <div className="flex-1">
-          {!reacted ? (
-            <>
-              <p className="mb-2 font-brutalist text-sm">{prompt}</p>
-              <div className="flex gap-2">
-                <button 
-                  onClick={handleClick}
-                  className="bg-brutalist text-white px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-brutalist/80 transition-colors"
-                >
-                  READ
-                </button>
-                <button 
-                  onClick={handleIgnore}
-                  className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-gray-100 transition-colors"
-                >
-                  LATER
-                </button>
+    <AnimatePresence>
+      {!isHidden && (
+        <motion.div 
+          className={`dad-avatar ${!isVisible ? "hidden" : ""} ${isAnimating ? "dad-pop" : ""}`}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 50, opacity: 0 }}
+          transition={{ type: "spring", bounce: 0.5 }}
+        >
+          <div className="flex items-start">
+            <motion.div 
+              className="mr-3 flex-shrink-0"
+              animate={{ 
+                rotate: headTilt,
+                scale: isAnimating ? [1, 1.1, 1] : 1
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              <div 
+                className={`dad-animated-face w-12 h-12 ${isBlinking ? "dad-blink" : ""}`}
+                style={{ 
+                  boxShadow: "0 3px 10px rgba(0,0,0,0.2)",
+                  border: "2px solid #000" 
+                }}
+              >
+                <div className="dad-avatar-eyes">
+                  <div className="dad-avatar-eye"></div>
+                  <div className="dad-avatar-eye"></div>
+                </div>
+                <motion.div 
+                  className={`dad-avatar-mouth ${mood}`}
+                  animate={{ 
+                    scaleX: mood === "happy" ? 1.2 : mood === "sad" ? 1.2 : 1,
+                  }}
+                  transition={{ duration: 0.3 }}
+                ></motion.div>
               </div>
-            </>
-          ) : (
-            <p className="font-brutalist text-sm">{reaction}</p>
-          )}
-        </div>
-      </div>
-    </div>
+            </motion.div>
+            <div className="flex-1">
+              {!reacted ? (
+                <>
+                  <motion.p 
+                    className="mb-2 font-brutalist text-sm"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    {prompt}
+                  </motion.p>
+                  <div className="flex gap-2">
+                    <motion.button 
+                      onClick={handleClick}
+                      className="bg-brutalist text-white px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-brutalist/80 transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      READ
+                    </motion.button>
+                    <motion.button 
+                      onClick={handleIgnore}
+                      className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-gray-100 transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      LATER
+                    </motion.button>
+                  </div>
+                </>
+              ) : (
+                <motion.p 
+                  className="font-brutalist text-sm"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  {reaction}
+                </motion.p>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

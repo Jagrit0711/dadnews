@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -114,7 +113,7 @@
   }
   
   .brutalist-header {
-    @apply relative font-brutalist text-brutalist text-5xl sm:text-6xl md:text-7xl tracking-tighter uppercase font-bold
+    @apply relative font-brutalist text-brutalist text-4xl sm:text-5xl md:text-6xl tracking-tighter uppercase font-bold
     before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-1 before:bg-brutalist
     after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-20 after:h-1 after:bg-white after:mix-blend-difference after:animate-underline-shimmer
   }
@@ -208,6 +207,23 @@
     @apply w-4 h-0 border-t-2 border-white rounded-none top-6 bottom-auto
   }
 
+  .dad-eyebrow {
+    @apply absolute w-2 h-1 bg-white rounded-t-full;
+    top: 1px;
+  }
+  
+  .dad-eyebrow.left {
+    left: 4px;
+  }
+  
+  .dad-eyebrow.right {
+    right: 4px;
+  }
+  
+  .dad-eyebrow.surprised {
+    transform: translateY(-2px);
+  }
+
   @keyframes dad-bounce {
     0%, 100% {
       transform: translateY(0);
@@ -229,11 +245,40 @@
     }
   }
 
+  @keyframes dad-head-shake {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-5deg);
+    }
+    75% {
+      transform: rotate(5deg);
+    }
+  }
+
+  .dad-head-shake {
+    animation: dad-head-shake 1s ease-in-out;
+  }
+
   .shadow-brutalist {
     box-shadow: 5px 5px 0px 0px rgba(0, 0, 0);
   }
 
   .rounded-brutalist {
     border-radius: 0.5rem;
+  }
+  
+  @media (max-width: 640px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .dad-avatar {
+      max-width: calc(100% - 2rem);
+      right: 1rem;
+      bottom: 5rem;
+    }
   }
 }
