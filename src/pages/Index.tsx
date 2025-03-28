@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { NewsFeed } from "@/components/NewsFeed";
+import { CategoryBar } from "@/components/CategoryBar";
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -19,6 +20,7 @@ const Index = () => {
 
   return (
     <Layout>
+      <CategoryBar onCategoryChange={handleCategoryChange} />
       <NewsFeed 
         category={selectedCategory} 
         onArticleRead={handleArticleRead} 

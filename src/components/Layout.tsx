@@ -2,7 +2,6 @@
 import { ReactNode, useState, useEffect } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Header } from "./Header";
-import { CategoryBar } from "./CategoryBar";
 import { DadAISidebar } from "./DadAISidebar";
 import { DadAvatar } from "./DadAvatar";
 import { Navigation } from "./Navigation";
@@ -14,7 +13,6 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [userEngagement, setUserEngagement] = useState(30);
   const [readArticles, setReadArticles] = useState<string[]>([]);
   const [showDadAvatar, setShowDadAvatar] = useState(false);
@@ -40,10 +38,6 @@ export function Layout({ children }: LayoutProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [showDadAvatar, isMobile]);
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-  };
-
   const handleArticleRead = (newsId: string) => {
     if (!readArticles.includes(newsId)) {
       setReadArticles([...readArticles, newsId]);
@@ -65,7 +59,6 @@ export function Layout({ children }: LayoutProps) {
       <div className="min-h-screen flex w-full flex-col">
         <Header />
         <Navigation />
-        <CategoryBar onCategoryChange={handleCategoryChange} />
         <div className="flex flex-1 relative pb-16 sm:pb-0">
           <div className="flex-1 px-4 md:px-0">
             {children}
