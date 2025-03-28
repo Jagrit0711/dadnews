@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -106,14 +105,26 @@
     rounded-brutalist
   }
   
+  .dark .news-card {
+    @apply border-white hover:shadow-[3px_3px_0px_0px_rgba(255,255,255)]
+  }
+  
   .category-button {
     @apply px-2 py-1 rounded-full border-2 border-brutalist bg-background text-foreground font-brutalist tracking-wide
     hover:bg-brutalist hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brutalist
     whitespace-nowrap text-center
   }
   
+  .dark .category-button {
+    @apply border-white hover:bg-white hover:text-black
+  }
+  
   .category-button.active {
     @apply bg-brutalist text-white
+  }
+  
+  .dark .category-button.active {
+    @apply bg-white text-black
   }
   
   .brutalist-header {
@@ -124,15 +135,24 @@
   
   .dark .brutalist-header {
     @apply text-white;
+    @apply before:bg-white;
   }
   
   .dad-ai-message {
     @apply p-3 my-2 rounded-brutalist bg-sidebar border-l-4 border-brutalist font-brutalist-text text-sm
   }
   
+  .dark .dad-ai-message {
+    @apply border-white
+  }
+  
   .dad-avatar {
     @apply fixed bottom-16 sm:bottom-4 right-4 p-3 sm:p-4 rounded-brutalist bg-white dark:bg-brutalist-secondary text-brutalist dark:text-white
     border-2 border-brutalist shadow-[3px_3px_0px_0px_rgba(0,0,0)] z-50 max-w-xs animate-float-up transition-all duration-300
+  }
+  
+  .dark .dad-avatar {
+    @apply border-white shadow-[3px_3px_0px_0px_rgba(255,255,255)]
   }
   
   .dad-avatar.hidden {
@@ -170,11 +190,19 @@
     bg-white border-2 border-brutalist shadow-md hidden group-hover:block
     whitespace-nowrap text-xs font-brutalist-text
   }
+  
+  .dark .avatar-bubble {
+    @apply bg-black border-white
+  }
 
   .avatar-bubble:after {
     content: '';
     @apply absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 border-l-[8px] border-l-transparent 
     border-t-[8px] border-t-brutalist border-r-[8px] border-r-transparent
+  }
+  
+  .dark .avatar-bubble:after {
+    @apply border-t-white
   }
 
   .dad-animated-face {
@@ -272,12 +300,15 @@
   .shadow-brutalist {
     box-shadow: 3px 3px 0px 0px rgba(0, 0, 0);
   }
+  
+  .dark .shadow-brutalist {
+    box-shadow: 3px 3px 0px 0px rgba(255, 255, 255);
+  }
 
   .rounded-brutalist {
     border-radius: 0.375rem;
   }
   
-  /* Improve scrollbar appearance */
   .scrollbar-none {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -287,7 +318,6 @@
     display: none;
   }
   
-  /* Line clamping for text */
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;

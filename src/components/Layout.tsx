@@ -8,6 +8,7 @@ import { Navigation } from "./Navigation";
 import { InstallPrompt } from "./InstallPrompt";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { mockNewsData } from "../data/mockNewsData";
+import { useNavigate } from "react-router-dom";
 
 interface LayoutProps {
   children: ReactNode;
@@ -20,7 +21,9 @@ export function Layout({ children }: LayoutProps) {
   const [currentSuggestion, setCurrentSuggestion] = useState("");
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showCount, setShowCount] = useState(0);
+  const [currentArticleId, setCurrentArticleId] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +51,7 @@ export function Layout({ children }: LayoutProps) {
             ];
             
             setCurrentSuggestion(suggestionStyles[Math.floor(Math.random() * suggestionStyles.length)]);
+            setCurrentArticleId(randomNews.id);
             setShowDadAvatar(true);
             setShowCount(prev => prev + 1);
           }
@@ -70,6 +74,7 @@ export function Layout({ children }: LayoutProps) {
           if (unreadNews.length > 0) {
             const randomNews = unreadNews[Math.floor(Math.random() * unreadNews.length)];
             setCurrentSuggestion(`Hey! While you're taking a break, read "${randomNews.title}"`);
+            setCurrentArticleId(randomNews.id);
             setShowDadAvatar(true);
             setShowCount(prev => prev + 1);
           }
@@ -89,19 +94,38 @@ export function Layout({ children }: LayoutProps) {
 
   const handleDadAvatarAction = (action: "read" | "ignore") => {
     if (action === "read") {
-      // Extract article ID from suggestion if possible
-      const articleTitle = currentSuggestion.match(/"([^"]+)"/)?.[1];
-      if (articleTitle) {
-        const article = mockNewsData.find(item => item.title === articleTitle);
-        if (article) {
-          handleArticleRead(article.id);
+      // If there's a current article, navigate to it
+      if (currentArticleId) {
+        handleArticleRead(currentArticleId);
+        navigate(`/article/${currentArticleId}`);
+      } else {
+        // Extract article ID from suggestion if possible
+        const articleTitle = currentSuggestion.match(/"([^"]+)"/)?.[1];
+        if (articleTitle) {
+          const article = mockNewsData.find(item => item.title === articleTitle);
+          if (article) {
+            handleArticleRead(article.id);
+            navigate(`/article/${article.id}`);
+          }
         }
       }
       
       setUserEngagement(prev => Math.min(prev + 5, 100));
+      setShowDadAvatar(false);
     } else {
-      // When ignoring, don't hide dad avatar completely - handled within DadAvatar component
+      // When ignoring, don't hide dad avatar completely - make it nag more
       setUserEngagement(prev => Math.max(prev - 5, 0));
+      
+      // Instead of hiding, update the message to be more nagging
+      const naggingMessages = [
+        "You're missing out on important information!",
+        "Come on, this is critical reading!",
+        "Dad says you NEED to read this!",
+        "Are you sure? This is important!",
+        "You'll regret not reading this one!"
+      ];
+      
+      setCurrentSuggestion(naggingMessages[Math.floor(Math.random() * naggingMessages.length)]);
     }
   };
 

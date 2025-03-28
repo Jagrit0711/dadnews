@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export function Header() {
   return (
-    <header className="pt-4 pb-2 border-b border-brutalist">
+    <header className="pt-4 pb-2 border-b-2 border-brutalist dark:border-white">
       <div className="container px-4 flex flex-col items-center">
         <motion.div 
           className="flex flex-col items-center mb-1"
