@@ -17,7 +17,7 @@ const Search = () => {
     // Filter mockNewsData based on searchTerm
     const results = mockNewsData.filter(
       news => news.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-              news.content.toLowerCase().includes(searchTerm.toLowerCase())
+              news.summary.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(results.length > 0 ? results : mockNewsData.slice(0, 3));
   };
@@ -69,13 +69,13 @@ const Search = () => {
               <Card key={article.id} className="hover:shadow-md transition-shadow border-2 border-brutalist">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg font-medium">{article.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{article.date} · {article.category}</p>
+                  <p className="text-sm text-muted-foreground">{article.category}</p>
                 </CardHeader>
                 <CardContent>
-                  <p className="line-clamp-2 text-sm">{article.content.substring(0, 150)}...</p>
+                  <p className="line-clamp-2 text-sm">{article.summary}</p>
                 </CardContent>
                 <CardFooter className="border-t pt-4 flex justify-between">
-                  <span className="text-sm text-muted-foreground">{article.source}</span>
+                  <span className="text-sm text-muted-foreground">News Source</span>
                   <Button variant="outline" size="sm">Read More</Button>
                 </CardFooter>
               </Card>
