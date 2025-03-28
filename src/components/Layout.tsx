@@ -5,6 +5,7 @@ import { Header } from "./Header";
 import { DadAISidebar } from "./DadAISidebar";
 import { DadAvatar } from "./DadAvatar";
 import { Navigation } from "./Navigation";
+import { InstallPrompt } from "./InstallPrompt";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { mockNewsData } from "../data/mockNewsData";
 
@@ -60,10 +61,10 @@ export function Layout({ children }: LayoutProps) {
         <Header />
         <Navigation />
         <div className="flex flex-1 relative pb-16 sm:pb-0">
-          <div className="flex-1 px-4 md:px-0">
+          <div className="flex-1 w-full">
             {children}
           </div>
-          <div className="hidden lg:block w-1/4 min-w-[300px]">
+          <div className="hidden lg:block w-1/4 min-w-[280px]">
             <DadAISidebar 
               newsItems={mockNewsData}
               userEngagement={userEngagement}
@@ -71,6 +72,9 @@ export function Layout({ children }: LayoutProps) {
             />
           </div>
         </div>
+        
+        {/* Install prompt */}
+        <InstallPrompt />
         
         {/* Only show floating avatar when needed and not on mobile */}
         {!isMobile && (

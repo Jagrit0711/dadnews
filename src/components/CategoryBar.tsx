@@ -32,7 +32,7 @@ export function CategoryBar({ onCategoryChange }: CategoryBarProps) {
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { current } = scrollRef;
-      const scrollAmount = 200;
+      const scrollAmount = 150;
       
       if (direction === "left") {
         current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
@@ -43,26 +43,26 @@ export function CategoryBar({ onCategoryChange }: CategoryBarProps) {
   };
 
   return (
-    <div className="relative container py-4">
+    <div className="relative py-2 px-2 sm:px-4">
       <div className="flex items-center">
         <Button 
           variant="outline" 
           size="icon" 
           onClick={() => scroll("left")}
-          className="mr-2 shrink-0 rounded-full border-2 border-brutalist md:hidden"
+          className="mr-1 shrink-0 rounded-full border-2 border-brutalist h-8 w-8"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-3 w-3" />
         </Button>
         
         <div 
           ref={scrollRef}
-          className="flex gap-2 overflow-x-auto scrollbar-none py-2 px-1"
+          className="flex gap-1 overflow-x-auto scrollbar-none py-1 px-1 max-w-full"
         >
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => handleCategoryClick(category)}
-              className={`category-button shrink-0 ${
+              className={`category-button shrink-0 text-xs sm:text-sm py-1 px-2 sm:px-3 ${
                 activeCategory === category ? "active" : ""
               }`}
             >
@@ -75,9 +75,9 @@ export function CategoryBar({ onCategoryChange }: CategoryBarProps) {
           variant="outline" 
           size="icon" 
           onClick={() => scroll("right")}
-          className="ml-2 shrink-0 rounded-full border-2 border-brutalist md:hidden"
+          className="ml-1 shrink-0 rounded-full border-2 border-brutalist h-8 w-8"
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-3 w-3" />
         </Button>
       </div>
     </div>

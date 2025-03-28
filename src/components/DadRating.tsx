@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { ThumbsUp, ThumbsDown, Wrench } from "lucide-react";
 
@@ -53,36 +54,36 @@ export function DadRating({ articleId }: DadRatingProps) {
   };
 
   return (
-    <div className="flex items-center">
-      <div className="mr-4">
+    <div className="flex items-center flex-wrap gap-2">
+      <div>
         <span className={`inline-block px-2 py-1 text-xs font-brutalist rounded-brutalist ${approved ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
           {approved ? 'DAD APPROVED' : 'NEEDS WORK'}
         </span>
       </div>
       
-      <div className="flex space-x-2 items-center">
+      <div className="flex space-x-1 items-center">
         <button 
           onClick={() => handleRate(1)} 
-          className={`flex items-center p-2 rounded-brutalist transition-colors ${rating === 1 ? 'bg-brutalist text-white' : 'bg-secondary hover:bg-secondary/80'}`}
+          className={`flex items-center p-1 rounded-brutalist transition-colors ${rating === 1 ? 'bg-brutalist text-white' : 'bg-secondary hover:bg-secondary/80'}`}
         >
-          <ThumbsUp size={18} className="mr-1" />
+          <ThumbsUp size={14} className="mr-1" />
           <span className="text-xs">{total.thumbsUp}</span>
         </button>
         
         <button 
           onClick={() => handleRate(-1)} 
-          className={`flex items-center p-2 rounded-brutalist transition-colors ${rating === -1 ? 'bg-brutalist text-white' : 'bg-secondary hover:bg-secondary/80'}`}
+          className={`flex items-center p-1 rounded-brutalist transition-colors ${rating === -1 ? 'bg-brutalist text-white' : 'bg-secondary hover:bg-secondary/80'}`}
         >
-          <ThumbsDown size={18} className="mr-1" />
+          <ThumbsDown size={14} className="mr-1" />
           <span className="text-xs">{total.thumbsDown}</span>
         </button>
         
         <button 
           onClick={() => handleRate(2)} 
-          className={`flex items-center p-2 rounded-brutalist transition-colors ${rating === 2 ? 'bg-brutalist text-white' : 'bg-secondary hover:bg-secondary/80'}`}
+          className={`flex items-center p-1 rounded-brutalist transition-colors ${rating === 2 ? 'bg-brutalist text-white' : 'bg-secondary hover:bg-secondary/80'}`}
           title="Dad Tool Rating"
         >
-          <Wrench size={18} className="mr-1" />
+          <Wrench size={14} className="mr-1" />
           <span className="text-xs">{total.tools}</span>
         </button>
       </div>

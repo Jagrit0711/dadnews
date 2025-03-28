@@ -26,23 +26,23 @@ export function NewsCard({ news, onReadMore }: NewsCardProps) {
   };
 
   return (
-    <div className="news-card flex flex-col h-full">
+    <div className="news-card flex flex-col h-full w-full">
       <div className="mb-2">
         <span className="inline-block px-2 py-1 text-xs font-brutalist bg-brutalist text-white rounded-brutalist">
           {news.category}
         </span>
       </div>
-      <h2 className="text-xl font-brutalist mb-2">{news.title}</h2>
-      <p className="text-sm mb-4 flex-grow">{news.summary}</p>
+      <h2 className="text-lg sm:text-xl font-brutalist mb-2 line-clamp-2">{news.title}</h2>
+      <p className="text-xs sm:text-sm mb-3 flex-grow line-clamp-3">{news.summary}</p>
       
-      <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
         <DadRating articleId={news.id} />
         <ShareButtons article={news} />
       </div>
       
       <Button 
         onClick={handleReadMore} 
-        className="w-full border-2 border-brutalist rounded-brutalist"
+        className="w-full border-2 border-brutalist rounded-brutalist text-sm"
       >
         READ MORE
       </Button>

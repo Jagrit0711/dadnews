@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -91,6 +92,8 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Helvetica', 'Arial', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-brutalist tracking-tight;
@@ -99,13 +102,14 @@
 
 @layer components {
   .news-card {
-    @apply bg-card border-2 border-brutalist p-4 transition-all duration-200 hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)]
+    @apply bg-card border-2 border-brutalist p-3 sm:p-4 transition-all duration-200 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0)]
     rounded-brutalist
   }
   
   .category-button {
-    @apply px-4 py-2 rounded-full border-2 border-brutalist bg-background text-foreground font-brutalist tracking-wide
+    @apply px-2 py-1 rounded-full border-2 border-brutalist bg-background text-foreground font-brutalist tracking-wide
     hover:bg-brutalist hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brutalist
+    whitespace-nowrap text-center
   }
   
   .category-button.active {
@@ -113,9 +117,9 @@
   }
   
   .brutalist-header {
-    @apply relative font-brutalist text-brutalist text-4xl sm:text-5xl md:text-6xl tracking-tighter uppercase font-bold
-    before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-1 before:bg-brutalist
-    after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-20 after:h-1 after:bg-white after:mix-blend-difference after:animate-underline-shimmer;
+    @apply relative font-brutalist text-brutalist tracking-tighter uppercase font-bold
+    before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-brutalist
+    after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-20 after:h-[2px] after:bg-white after:mix-blend-difference after:animate-underline-shimmer;
   }
   
   .dark .brutalist-header {
@@ -127,8 +131,8 @@
   }
   
   .dad-avatar {
-    @apply fixed bottom-4 right-4 p-4 rounded-brutalist bg-white dark:bg-brutalist-secondary text-brutalist dark:text-white
-    border-2 border-brutalist shadow-[5px_5px_0px_0px_rgba(0,0,0)] z-50 max-w-xs animate-float-up transition-all duration-300
+    @apply fixed bottom-16 sm:bottom-4 right-4 p-3 sm:p-4 rounded-brutalist bg-white dark:bg-brutalist-secondary text-brutalist dark:text-white
+    border-2 border-brutalist shadow-[3px_3px_0px_0px_rgba(0,0,0)] z-50 max-w-xs animate-float-up transition-all duration-300
   }
   
   .dad-avatar.hidden {
@@ -149,12 +153,12 @@
   }
 
   .bottom-nav {
-    @apply fixed bottom-0 left-0 right-0 z-50 flex h-16 items-center justify-around border-t 
-    bg-background px-4 sm:hidden
+    @apply fixed bottom-0 left-0 right-0 z-50 flex h-14 items-center justify-around border-t 
+    bg-background px-2 sm:hidden
   }
 
   .avatar-container {
-    @apply relative w-12 h-12 flex items-center justify-center
+    @apply relative w-10 h-10 flex items-center justify-center
   }
 
   .avatar-container.dad-bounce {
@@ -266,23 +270,35 @@
   }
 
   .shadow-brutalist {
-    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0);
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0);
   }
 
   .rounded-brutalist {
-    border-radius: 0.5rem;
+    border-radius: 0.375rem;
   }
   
-  @media (max-width: 640px) {
-    .container {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-    
-    .dad-avatar {
-      max-width: calc(100% - 2rem);
-      right: 1rem;
-      bottom: 5rem;
-    }
+  /* Improve scrollbar appearance */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Line clamping for text */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
