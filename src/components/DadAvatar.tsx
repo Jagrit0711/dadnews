@@ -35,12 +35,14 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   const [reaction, setReaction] = useState("");
   const [reacted, setReacted] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
+  const [mood, setMood] = useState<"happy" | "sad" | "neutral">("neutral");
 
   useEffect(() => {
     if (isVisible && !isHidden) {
       const randomPrompt = suggestion || dadPrompts[Math.floor(Math.random() * dadPrompts.length)];
       setPrompt(randomPrompt);
       setReacted(false);
+      setMood("neutral");
     }
   }, [isVisible, suggestion, isHidden]);
 
@@ -57,6 +59,7 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   const handleClick = () => {
     onAction("read");
     setReacted(true);
+    setMood("happy");
     const positiveReaction = dadReactions.positive[Math.floor(Math.random() * dadReactions.positive.length)];
     setReaction(positiveReaction);
     
@@ -68,6 +71,7 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   const handleIgnore = () => {
     onAction("ignore");
     setReacted(true);
+    setMood("sad");
     const negativeReaction = dadReactions.negative[Math.floor(Math.random() * dadReactions.negative.length)];
     setReaction(negativeReaction);
   };
@@ -77,21 +81,29 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   return (
     <div className={`dad-avatar ${!isVisible ? "hidden" : ""}`}>
       <div className="flex items-start">
-        <div className="mr-3 font-bold text-lg">👨‍🦳</div>
-        <div>
+        <div className="mr-3 flex-shrink-0">
+          <div className="dad-animated-face w-12 h-12">
+            <div className="dad-avatar-eyes">
+              <div className="dad-avatar-eye"></div>
+              <div className="dad-avatar-eye"></div>
+            </div>
+            <div className={`dad-avatar-mouth ${mood}`}></div>
+          </div>
+        </div>
+        <div className="flex-1">
           {!reacted ? (
             <>
               <p className="mb-2 font-brutalist text-sm">{prompt}</p>
               <div className="flex gap-2">
                 <button 
                   onClick={handleClick}
-                  className="bg-brutalist text-white px-3 py-1 text-sm font-bold"
+                  className="bg-brutalist text-white px-3 py-1 text-sm font-bold rounded-brutalist"
                 >
                   READ
                 </button>
                 <button 
                   onClick={handleIgnore}
-                  className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold"
+                  className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold rounded-brutalist"
                 >
                   LATER
                 </button>

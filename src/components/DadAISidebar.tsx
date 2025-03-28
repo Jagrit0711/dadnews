@@ -34,6 +34,7 @@ const dadResponses = {
 export function DadAISidebar({ newsItems, userEngagement, onNewsClick }: DadAISidebarProps) {
   const [greeting, setGreeting] = useState("");
   const [topNews, setTopNews] = useState<NewsItem[]>([]);
+  const [dadMood, setDadMood] = useState<"happy" | "sad" | "neutral">("neutral");
 
   useEffect(() => {
     const randomGreeting = dadGreetings[Math.floor(Math.random() * dadGreetings.length)];
@@ -41,7 +42,16 @@ export function DadAISidebar({ newsItems, userEngagement, onNewsClick }: DadAISi
     
     // Get top 5 news items
     setTopNews(newsItems.slice(0, 5));
-  }, [newsItems]);
+    
+    // Set dad's mood based on user engagement
+    if (userEngagement > 70) {
+      setDadMood("happy");
+    } else if (userEngagement < 30) {
+      setDadMood("sad");
+    } else {
+      setDadMood("neutral");
+    }
+  }, [newsItems, userEngagement]);
 
   const getResponse = () => {
     const responseType = userEngagement > 50 ? "positive" : "negative";
@@ -53,8 +63,17 @@ export function DadAISidebar({ newsItems, userEngagement, onNewsClick }: DadAISi
     <div className="h-full px-4 py-6 bg-sidebar border-l border-brutalist">
       <h2 className="font-brutalist text-2xl mb-4">DAD'S BRIEFING</h2>
       
-      <div className="dad-ai-message">
-        {greeting}
+      <div className="flex items-center mb-4">
+        <div className="dad-animated-face mr-3">
+          <div className="dad-avatar-eyes">
+            <div className="dad-avatar-eye"></div>
+            <div className="dad-avatar-eye"></div>
+          </div>
+          <div className={`dad-avatar-mouth ${dadMood}`}></div>
+        </div>
+        <div className="dad-ai-message flex-1">
+          {greeting}
+        </div>
       </div>
       
       <div className="mt-6">

@@ -5,6 +5,8 @@ import { Header } from "./Header";
 import { CategoryBar } from "./CategoryBar";
 import { DadAISidebar } from "./DadAISidebar";
 import { DadAvatar } from "./DadAvatar";
+import { Navigation } from "./Navigation";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { mockNewsData } from "../data/mockNewsData";
 
 interface LayoutProps {
@@ -18,6 +20,7 @@ export function Layout({ children }: LayoutProps) {
   const [showDadAvatar, setShowDadAvatar] = useState(false);
   const [currentSuggestion, setCurrentSuggestion] = useState("");
   const [scrollPosition, setScrollPosition] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,23 +61,22 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <main className="flex-1 flex flex-col min-h-screen">
-          <Header />
-          <CategoryBar onCategoryChange={handleCategoryChange} />
-          <div className="flex flex-1">
-            <div className="flex-1">
-              {children}
-            </div>
-            <div className="hidden lg:block w-1/4 min-w-[300px]">
-              <DadAISidebar 
-                newsItems={mockNewsData}
-                userEngagement={userEngagement}
-                onNewsClick={handleArticleRead}
-              />
-            </div>
+      <div className="min-h-screen flex w-full flex-col">
+        <Header />
+        <Navigation />
+        <CategoryBar onCategoryChange={handleCategoryChange} />
+        <div className="flex flex-1 relative pb-16 sm:pb-0">
+          <div className="flex-1">
+            {children}
           </div>
-        </main>
+          <div className="hidden lg:block w-1/4 min-w-[300px]">
+            <DadAISidebar 
+              newsItems={mockNewsData}
+              userEngagement={userEngagement}
+              onNewsClick={handleArticleRead}
+            />
+          </div>
+        </div>
         
         <DadAvatar 
           isVisible={showDadAvatar}

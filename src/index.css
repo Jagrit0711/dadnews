@@ -33,7 +33,7 @@
     --input: 0 0% 89%;
     --ring: 0 0% 7%;
 
-    --radius: 0;
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 96%;
     --sidebar-foreground: 0 0% 7%;
@@ -101,6 +101,7 @@
 @layer components {
   .news-card {
     @apply bg-card border-2 border-brutalist p-4 transition-all duration-200 hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)]
+    rounded-brutalist
   }
   
   .category-button {
@@ -119,15 +120,74 @@
   }
   
   .dad-ai-message {
-    @apply p-3 my-2 rounded bg-sidebar border-l-4 border-brutalist font-brutalist-text text-sm
+    @apply p-3 my-2 rounded-brutalist bg-sidebar border-l-4 border-brutalist font-brutalist-text text-sm
   }
   
   .dad-avatar {
-    @apply fixed bottom-4 right-4 p-4 rounded-lg bg-white dark:bg-brutalist-secondary text-brutalist dark:text-white
+    @apply fixed bottom-4 right-4 p-4 rounded-brutalist bg-white dark:bg-brutalist-secondary text-brutalist dark:text-white
     border-2 border-brutalist shadow-[5px_5px_0px_0px_rgba(0,0,0)] z-50 max-w-xs animate-float-up
   }
   
   .dad-avatar.hidden {
     @apply animate-float-down
+  }
+
+  .nav-link {
+    @apply flex flex-col items-center justify-center text-xs font-medium transition-colors 
+    hover:text-foreground/80 sm:flex-row sm:space-x-2 sm:text-sm
+  }
+
+  .nav-link.active {
+    @apply text-foreground
+  }
+
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 z-50 flex h-16 items-center justify-around border-t 
+    bg-background px-4 sm:hidden
+  }
+
+  .avatar-container {
+    @apply relative w-12 h-12 flex items-center justify-center
+  }
+
+  .avatar-bubble {
+    @apply absolute -top-16 left-1/2 transform -translate-x-1/2 p-2 rounded-brutalist 
+    bg-white border-2 border-brutalist shadow-md hidden group-hover:block
+    whitespace-nowrap text-xs font-brutalist-text
+  }
+
+  .avatar-bubble:after {
+    content: '';
+    @apply absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 border-l-[8px] border-l-transparent 
+    border-t-[8px] border-t-brutalist border-r-[8px] border-r-transparent
+  }
+
+  .dad-animated-face {
+    @apply w-10 h-10 bg-brutalist rounded-full relative flex items-center justify-center
+    transition-all duration-300 hover:scale-110
+  }
+
+  .dad-avatar-eyes {
+    @apply flex space-x-2 absolute top-3
+  }
+  
+  .dad-avatar-eye {
+    @apply w-2 h-2 bg-white rounded-full
+  }
+  
+  .dad-avatar-mouth {
+    @apply absolute w-5 h-2 border-b-2 border-white rounded-b-full bottom-3
+  }
+  
+  .dad-avatar-mouth.happy {
+    @apply border-b-2 border-white
+  }
+  
+  .dad-avatar-mouth.sad {
+    @apply border-t-2 border-white rounded-t-full top-7 bottom-auto
+  }
+  
+  .dad-avatar-mouth.neutral {
+    @apply w-4 h-0 border-t-2 border-white rounded-none top-6 bottom-auto
   }
 }
