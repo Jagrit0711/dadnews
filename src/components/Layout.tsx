@@ -1,11 +1,10 @@
-
 import { ReactNode, useState, useEffect } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Header } from "./Header";
-import { DadAISidebar } from "./DadAISidebar";
 import { DadAvatar } from "./DadAvatar";
 import { Navigation } from "./Navigation";
 import { InstallPrompt } from "./InstallPrompt";
+import { Onboarding } from "./Onboarding";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { mockNewsData } from "../data/mockNewsData";
 import { useNavigate } from "react-router-dom";
@@ -22,8 +21,17 @@ export function Layout({ children }: LayoutProps) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showCount, setShowCount] = useState(0);
   const [currentArticleId, setCurrentArticleId] = useState<string | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user has completed onboarding
+    const onboardingComplete = localStorage.getItem('onboardingComplete');
+    if (!onboardingComplete) {
+      setShowOnboarding(true);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -129,6 +137,10 @@ export function Layout({ children }: LayoutProps) {
     }
   };
 
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
+  };
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full flex-col">
@@ -137,13 +149,6 @@ export function Layout({ children }: LayoutProps) {
         <div className="flex flex-1 relative pb-16 sm:pb-0">
           <div className="flex-1 w-full">
             {children}
-          </div>
-          <div className="hidden lg:block w-1/4 min-w-[280px]">
-            <DadAISidebar 
-              newsItems={mockNewsData}
-              userEngagement={userEngagement}
-              onNewsClick={handleArticleRead}
-            />
           </div>
         </div>
         
@@ -156,6 +161,11 @@ export function Layout({ children }: LayoutProps) {
           suggestion={currentSuggestion}
           onAction={handleDadAvatarAction}
         />
+
+        {/* Onboarding */}
+        {showOnboarding && (
+          <Onboarding onComplete={handleOnboardingComplete} />
+        )}
       </div>
     </SidebarProvider>
   );
