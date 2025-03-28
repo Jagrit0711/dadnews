@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface DadAvatarProps {
   isVisible: boolean;
@@ -36,6 +36,21 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   const [reacted, setReacted] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const [mood, setMood] = useState<"happy" | "sad" | "neutral">("neutral");
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Blinking effect
+  useEffect(() => {
+    if (isVisible && !isHidden) {
+      const blinkInterval = setInterval(() => {
+        setIsBlinking(true);
+        setTimeout(() => setIsBlinking(false), 200);
+      }, 4000);
+      
+      return () => clearInterval(blinkInterval);
+    }
+  }, [isVisible, isHidden]);
 
   useEffect(() => {
     if (isVisible && !isHidden) {
@@ -43,6 +58,10 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
       setPrompt(randomPrompt);
       setReacted(false);
       setMood("neutral");
+      
+      // Add animation when appearing
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 500);
     }
   }, [isVisible, suggestion, isHidden]);
 
@@ -50,10 +69,19 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
     if (isVisible) {
       setIsHidden(false);
     } else {
-      setTimeout(() => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
         setIsHidden(true);
       }, 500); // Match animation duration
     }
+    
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [isVisible]);
 
   const handleClick = () => {
@@ -62,6 +90,10 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
     setMood("happy");
     const positiveReaction = dadReactions.positive[Math.floor(Math.random() * dadReactions.positive.length)];
     setReaction(positiveReaction);
+    
+    // Dad does a little dance when happy
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 500);
     
     setTimeout(() => {
       onAction("ignore"); // This will hide the avatar after a delay
@@ -79,10 +111,10 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
   if (isHidden) return null;
 
   return (
-    <div className={`dad-avatar ${!isVisible ? "hidden" : ""}`}>
+    <div className={`dad-avatar ${!isVisible ? "hidden" : ""} ${isAnimating ? "dad-pop" : ""}`}>
       <div className="flex items-start">
         <div className="mr-3 flex-shrink-0">
-          <div className="dad-animated-face w-12 h-12">
+          <div className={`dad-animated-face w-12 h-12 ${isBlinking ? "dad-blink" : ""}`}>
             <div className="dad-avatar-eyes">
               <div className="dad-avatar-eye"></div>
               <div className="dad-avatar-eye"></div>
@@ -97,13 +129,13 @@ export function DadAvatar({ isVisible, suggestion, onAction }: DadAvatarProps) {
               <div className="flex gap-2">
                 <button 
                   onClick={handleClick}
-                  className="bg-brutalist text-white px-3 py-1 text-sm font-bold rounded-brutalist"
+                  className="bg-brutalist text-white px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-brutalist/80 transition-colors"
                 >
                   READ
                 </button>
                 <button 
                   onClick={handleIgnore}
-                  className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold rounded-brutalist"
+                  className="bg-transparent border border-brutalist px-3 py-1 text-sm font-bold rounded-brutalist hover:bg-gray-100 transition-colors"
                 >
                   LATER
                 </button>

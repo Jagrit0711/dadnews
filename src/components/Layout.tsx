@@ -27,8 +27,8 @@ export function Layout({ children }: LayoutProps) {
       const position = window.scrollY;
       setScrollPosition(position);
       
-      // Randomly show Dad Avatar while scrolling
-      if (position > 200 && Math.random() < 0.1 && !showDadAvatar) {
+      // Show Dad Avatar while scrolling, but not if it's already showing
+      if (position > 200 && Math.random() < 0.05 && !showDadAvatar) {
         const randomNews = mockNewsData[Math.floor(Math.random() * mockNewsData.length)];
         setCurrentSuggestion(`Hey! You should check out "${randomNews.title}"`);
         setShowDadAvatar(true);
@@ -78,11 +78,14 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </div>
         
-        <DadAvatar 
-          isVisible={showDadAvatar}
-          suggestion={currentSuggestion}
-          onAction={handleDadAvatarAction}
-        />
+        {/* Only show floating avatar when needed and not on mobile */}
+        {!isMobile && (
+          <DadAvatar 
+            isVisible={showDadAvatar}
+            suggestion={currentSuggestion}
+            onAction={handleDadAvatarAction}
+          />
+        )}
       </div>
     </SidebarProvider>
   );

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Home, Search, History, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { DadAvatar } from "./DadAvatar";
+import { DadAIModal } from "./DadAIModal";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface NavLinkProps {
@@ -27,19 +28,26 @@ const NavLink = ({ to, icon, label, isActive, onClick }: NavLinkProps) => (
 export function Navigation() {
   const [activeLink, setActiveLink] = useState("home");
   const isMobile = useIsMobile();
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [dadMood, setDadMood] = useState<"happy" | "sad" | "neutral">("neutral");
+  const [userEngagement, setUserEngagement] = useState(50);
+  const [isBouncing, setIsBouncing] = useState(false);
 
   const handleNavClick = (link: string) => {
     setActiveLink(link);
     if (link === "dad") {
       setDadMood("happy");
+      setShowModal(true);
       setTimeout(() => setDadMood("neutral"), 2000);
     } else {
       // Random chance of dad getting sad if not clicked
       if (Math.random() > 0.7) {
         setDadMood("sad");
-        setTimeout(() => setDadMood("neutral"), 2000);
+        setIsBouncing(true);
+        setTimeout(() => {
+          setDadMood("neutral");
+          setIsBouncing(false);
+        }, 2000);
       }
     }
   };
@@ -63,7 +71,7 @@ export function Navigation() {
       />
       <div className="flex-1 flex justify-center">
         <div 
-          className="avatar-container group cursor-pointer" 
+          className={`avatar-container group cursor-pointer ${isBouncing ? 'dad-bounce' : ''}`}
           onClick={() => handleNavClick("dad")}
         >
           <div className="avatar-bubble">
@@ -113,7 +121,7 @@ export function Navigation() {
         onClick={() => handleNavClick("search")}
       />
       <div 
-        className="avatar-container group cursor-pointer" 
+        className={`avatar-container group cursor-pointer ${isBouncing ? 'dad-bounce' : ''}`}
         onClick={() => handleNavClick("dad")}
       >
         <div className="dad-animated-face">
@@ -145,6 +153,11 @@ export function Navigation() {
     <>
       {desktopNav}
       {mobileNav}
+      <DadAIModal 
+        isOpen={showModal} 
+        onClose={() => setShowModal(false)} 
+        userEngagement={userEngagement} 
+      />
     </>
   );
 }

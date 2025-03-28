@@ -125,11 +125,15 @@
   
   .dad-avatar {
     @apply fixed bottom-4 right-4 p-4 rounded-brutalist bg-white dark:bg-brutalist-secondary text-brutalist dark:text-white
-    border-2 border-brutalist shadow-[5px_5px_0px_0px_rgba(0,0,0)] z-50 max-w-xs animate-float-up
+    border-2 border-brutalist shadow-[5px_5px_0px_0px_rgba(0,0,0)] z-50 max-w-xs animate-float-up transition-all duration-300
   }
   
   .dad-avatar.hidden {
     @apply animate-float-down
+  }
+
+  .dad-avatar.dad-pop {
+    animation: dad-pop 0.5s ease;
   }
 
   .nav-link {
@@ -150,6 +154,10 @@
     @apply relative w-12 h-12 flex items-center justify-center
   }
 
+  .avatar-container.dad-bounce {
+    animation: dad-bounce 0.5s ease infinite;
+  }
+
   .avatar-bubble {
     @apply absolute -top-16 left-1/2 transform -translate-x-1/2 p-2 rounded-brutalist 
     bg-white border-2 border-brutalist shadow-md hidden group-hover:block
@@ -167,8 +175,14 @@
     transition-all duration-300 hover:scale-110
   }
 
+  .dad-animated-face.dad-blink .dad-avatar-eyes {
+    transform: scaleY(0.1);
+    transition: transform 0.1s ease;
+  }
+
   .dad-avatar-eyes {
-    @apply flex space-x-2 absolute top-3
+    @apply flex space-x-2 absolute top-3;
+    transition: transform 0.1s ease;
   }
   
   .dad-avatar-eye {
@@ -176,18 +190,50 @@
   }
   
   .dad-avatar-mouth {
-    @apply absolute w-5 h-2 border-b-2 border-white rounded-b-full bottom-3
+    @apply absolute w-5 h-2 border-b-2 border-white rounded-b-full bottom-3;
+    transition: all 0.3s ease;
   }
   
   .dad-avatar-mouth.happy {
-    @apply border-b-2 border-white
+    @apply border-b-2 border-white;
+    transform: scaleX(1.2);
   }
   
   .dad-avatar-mouth.sad {
-    @apply border-t-2 border-white rounded-t-full top-7 bottom-auto
+    @apply border-t-2 border-white rounded-t-full top-7 bottom-auto;
+    transform: scaleX(1.2);
   }
   
   .dad-avatar-mouth.neutral {
     @apply w-4 h-0 border-t-2 border-white rounded-none top-6 bottom-auto
+  }
+
+  @keyframes dad-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  @keyframes dad-pop {
+    0% {
+      transform: scale(0.9);
+    }
+    40% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .shadow-brutalist {
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0);
+  }
+
+  .rounded-brutalist {
+    border-radius: 0.5rem;
   }
 }
