@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Search from "./pages/Search";
 import History from "./pages/History";
 import Account from "./pages/Account";
+import ArticleDetail from "./pages/ArticleDetail";
 import NotFound from "./pages/NotFound";
 
 // Create a new QueryClient instance
@@ -28,6 +29,7 @@ const App: React.FC = () => {
               <Route path="/search" element={<Search />} />
               <Route path="/history" element={<History />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/article/:id" element={<ArticleDetail />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
