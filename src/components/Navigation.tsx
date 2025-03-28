@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Home, Search, History, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { DadAvatar } from "./DadAvatar";
+import { DadAIModal } from "./DadAIModal";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface NavLinkProps {
@@ -27,12 +28,14 @@ const NavLink = ({ to, icon, label, isActive, onClick }: NavLinkProps) => (
 export function Navigation() {
   const [activeLink, setActiveLink] = useState("home");
   const isMobile = useIsMobile();
-  const [showTooltip, setShowTooltip] = useState(false);
   const [dadMood, setDadMood] = useState<"happy" | "sad" | "neutral">("neutral");
+  const [userEngagement, setUserEngagement] = useState(30); // Default engagement level
+  const [showDadModal, setShowDadModal] = useState(false);
 
   const handleNavClick = (link: string) => {
     setActiveLink(link);
     if (link === "dad") {
+      setShowDadModal(true);
       setDadMood("happy");
       setTimeout(() => setDadMood("neutral"), 2000);
     } else {
@@ -63,7 +66,7 @@ export function Navigation() {
       />
       <div className="flex-1 flex justify-center">
         <div 
-          className="avatar-container group cursor-pointer" 
+          className="avatar-container group cursor-pointer hover-scale" 
           onClick={() => handleNavClick("dad")}
         >
           <div className="avatar-bubble">
@@ -113,8 +116,9 @@ export function Navigation() {
         onClick={() => handleNavClick("search")}
       />
       <div 
-        className="avatar-container group cursor-pointer" 
+        className="avatar-container group cursor-pointer hover-scale" 
         onClick={() => handleNavClick("dad")}
+        aria-label="Dad AI Summary"
       >
         <div className="dad-animated-face">
           <div className="dad-avatar-eyes">
@@ -145,6 +149,11 @@ export function Navigation() {
     <>
       {desktopNav}
       {mobileNav}
+      <DadAIModal 
+        isOpen={showDadModal} 
+        onClose={() => setShowDadModal(false)} 
+        userEngagement={userEngagement}
+      />
     </>
   );
 }

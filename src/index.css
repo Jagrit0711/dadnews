@@ -6,82 +6,61 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 7%;
-
+    --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 7%;
-
+    --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
-
-    --primary: 0 0% 7%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 7%;
-
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 7%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 0 0% 7%;
-
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 47.9 95.8% 53.1%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 96%;
-    --sidebar-foreground: 0 0% 7%;
-    --sidebar-primary: 0 0% 7%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 89%;
-    --sidebar-accent-foreground: 0 0% 7%;
-    --sidebar-border: 0 0% 89%;
-    --sidebar-ring: 0 0% 7%;
+    --sidebar: 0 0% 100%;
+    --sidebar-foreground: 20 14.3% 4.1%;
+    --sidebar-border: 20 5.9% 90%;
+    --sidebar-accent: 60 4.8% 95.9%;
+    --sidebar-accent-foreground: 24 9.8% 10%;
+    --sidebar-ring: 20 14.3% 4.1%;
+    --brutalist: 0 0% 10%;
   }
 
   .dark {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 7%;
-
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 83%;
-
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 0 0% 7%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 0% 83%;
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 47.9 95.8% 53.1%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 35.5 91.7% 32.9%;
+    --sidebar: 20 14.3% 4.1%;
+    --sidebar-foreground: 60 9.1% 97.8%;
+    --sidebar-border: 12 6.5% 15.1%;
+    --sidebar-accent: 12 6.5% 15.1%;
+    --sidebar-accent-foreground: 60 9.1% 97.8%;
+    --sidebar-ring: 35.5 91.7% 32.9%;
+    --brutalist: 50 70% 50%;
   }
 }
 
@@ -91,103 +70,132 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Helvetica', 'Arial', sans-serif;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-brutalist tracking-tight;
   }
 }
 
 @layer components {
-  .news-card {
-    @apply bg-card border-2 border-brutalist p-4 transition-all duration-200 hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)]
-    rounded-brutalist
-  }
-  
-  .category-button {
-    @apply px-4 py-2 rounded-full border-2 border-brutalist bg-background text-foreground font-brutalist tracking-wide
-    hover:bg-brutalist hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brutalist
-  }
-  
-  .category-button.active {
-    @apply bg-brutalist text-white
-  }
-  
-  .brutalist-header {
-    @apply relative font-brutalist text-brutalist text-5xl sm:text-6xl md:text-7xl tracking-tighter uppercase font-bold
-    before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-1 before:bg-brutalist
-    after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-20 after:h-1 after:bg-white after:mix-blend-difference after:animate-underline-shimmer
-  }
-  
-  .dad-ai-message {
-    @apply p-3 my-2 rounded-brutalist bg-sidebar border-l-4 border-brutalist font-brutalist-text text-sm
-  }
-  
-  .dad-avatar {
-    @apply fixed bottom-4 right-4 p-4 rounded-brutalist bg-white dark:bg-brutalist-secondary text-brutalist dark:text-white
-    border-2 border-brutalist shadow-[5px_5px_0px_0px_rgba(0,0,0)] z-50 max-w-xs animate-float-up
-  }
-  
-  .dad-avatar.hidden {
-    @apply animate-float-down
+  /* Dad AI Face Animation Components */
+  .dad-animated-face {
+    @apply relative w-10 h-10 bg-yellow-300 rounded-full flex flex-col items-center justify-center;
+    /* Adjust base size */
   }
 
-  .nav-link {
-    @apply flex flex-col items-center justify-center text-xs font-medium transition-colors 
-    hover:text-foreground/80 sm:flex-row sm:space-x-2 sm:text-sm
+  .dad-avatar-eyes {
+    @apply flex justify-center space-x-2 mt-1;
   }
 
-  .nav-link.active {
-    @apply text-foreground
+  .dad-avatar-eye {
+    @apply w-2 h-2 bg-black rounded-full;
+    position: relative;
+    transition: height 0.2s;
   }
 
-  .bottom-nav {
-    @apply fixed bottom-0 left-0 right-0 z-50 flex h-16 items-center justify-around border-t 
-    bg-background px-4 sm:hidden
+  .dad-avatar-eye.blink {
+    height: 0.5px;
   }
 
+  .dad-avatar-mouth {
+    @apply absolute w-4 h-2 bg-white rounded-b-full mt-2;
+    bottom: 25%;
+    transition: all 0.3s ease;
+  }
+
+  .dad-avatar-mouth.happy {
+    @apply w-5 h-3 bg-white rounded-b-full;
+    border-top: 1px solid #000;
+    transform: translateY(1px) rotate(10deg);
+  }
+
+  .dad-avatar-mouth.sad {
+    @apply w-5 h-2 bg-white rounded-t-full;
+    border-bottom: 1px solid #000;
+    transform: translateY(1px) rotate(-10deg);
+  }
+
+  .dad-avatar-mouth.neutral {
+    @apply w-4 h-0.5 bg-black rounded-sm;
+    border: none;
+  }
+
+  /* Avatar container and bubble */
   .avatar-container {
-    @apply relative w-12 h-12 flex items-center justify-center
+    @apply relative flex items-center justify-center;
   }
 
   .avatar-bubble {
-    @apply absolute -top-16 left-1/2 transform -translate-x-1/2 p-2 rounded-brutalist 
-    bg-white border-2 border-brutalist shadow-md hidden group-hover:block
-    whitespace-nowrap text-xs font-brutalist-text
+    @apply absolute hidden group-hover:block bottom-full w-40 p-2 mb-2 bg-white text-sm text-center rounded-lg shadow-md;
+    border: 2px solid theme('colors.brutalist');
   }
 
   .avatar-bubble:after {
     content: '';
-    @apply absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 border-l-[8px] border-l-transparent 
-    border-t-[8px] border-t-brutalist border-r-[8px] border-r-transparent
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px 8px 0;
+    border-style: solid;
+    border-color: theme('colors.brutalist') transparent;
   }
 
-  .dad-animated-face {
-    @apply w-10 h-10 bg-brutalist rounded-full relative flex items-center justify-center
-    transition-all duration-300 hover:scale-110
+  /* Navigation components */
+  .nav-link {
+    @apply flex items-center gap-2 py-2 px-3 rounded-md transition-colors;
   }
 
-  .dad-avatar-eyes {
-    @apply flex space-x-2 absolute top-3
+  .nav-link.active {
+    @apply bg-brutalist text-white;
   }
-  
-  .dad-avatar-eye {
-    @apply w-2 h-2 bg-white rounded-full
+
+  .nav-link:not(.active) {
+    @apply hover:bg-muted;
   }
-  
-  .dad-avatar-mouth {
-    @apply absolute w-5 h-2 border-b-2 border-white rounded-b-full bottom-3
+
+  /* Fixed bottom navigation bar for mobile */
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 flex items-center justify-between px-4 py-2 bg-background border-t border-border z-10 sm:hidden;
   }
-  
-  .dad-avatar-mouth.happy {
-    @apply border-b-2 border-white
+
+  /* Brutalist design elements */
+  .rounded-brutalist {
+    border-radius: 0.25rem;
   }
-  
-  .dad-avatar-mouth.sad {
-    @apply border-t-2 border-white rounded-t-full top-7 bottom-auto
+
+  .font-brutalist {
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
-  
-  .dad-avatar-mouth.neutral {
-    @apply w-4 h-0 border-t-2 border-white rounded-none top-6 bottom-auto
+
+  .bg-brutalist {
+    background-color: hsl(var(--brutalist));
+  }
+
+  .text-brutalist {
+    color: hsl(var(--brutalist));
+  }
+
+  .border-brutalist {
+    border-color: hsl(var(--brutalist));
+  }
+
+  /* Hover Animation */
+  .hover-scale {
+    transition: transform 0.2s ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  /* Blinking animation */
+  @keyframes blink {
+    0% { height: 0.5rem; }
+    10% { height: 0.1rem; }
+    20% { height: 0.5rem; }
+    100% { height: 0.5rem; }
+  }
+
+  .blink-animation {
+    animation: blink 4s infinite;
   }
 }
