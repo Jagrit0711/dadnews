@@ -115,7 +115,11 @@
   .brutalist-header {
     @apply relative font-brutalist text-brutalist text-4xl sm:text-5xl md:text-6xl tracking-tighter uppercase font-bold
     before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-1 before:bg-brutalist
-    after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-20 after:h-1 after:bg-white after:mix-blend-difference after:animate-underline-shimmer
+    after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-20 after:h-1 after:bg-white after:mix-blend-difference after:animate-underline-shimmer;
+  }
+  
+  .dark .brutalist-header {
+    @apply text-white;
   }
   
   .dad-ai-message {
