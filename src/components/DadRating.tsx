@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { ThumbsUp, ThumbsDown, Tool } from "lucide-react";
+import { ThumbsUp, ThumbsDown, Wrench } from "lucide-react";
 
 interface DadRatingProps {
   articleId: string;
@@ -48,7 +48,7 @@ export function DadRating({ articleId }: DadRatingProps) {
       // Add new vote
       setRating(value);
       if (value === 1) setTotal(prev => ({ ...prev, thumbsUp: prev.thumbsUp + 1 }));
-      else if (value === -1) setTotal(prev => ({ ...prev, thumbsDown: prev.thumbsDown + 1 }));
+      else if (value === -1) setTotal(prev => ({ ...prev, thumbsDown: prev.thumbsDown - 1 }));
       else setTotal(prev => ({ ...prev, tools: prev.tools + 1 }));
     }
   };
@@ -84,7 +84,7 @@ export function DadRating({ articleId }: DadRatingProps) {
           className={`flex items-center p-2 rounded-brutalist transition-colors ${rating === 2 ? 'bg-brutalist text-white' : 'bg-secondary hover:bg-secondary/80'}`}
           title="Dad Tool Rating"
         >
-          <Tool size={18} className="mr-1" />
+          <Wrench size={18} className="mr-1" />
           <span className="text-xs">{total.tools}</span>
         </button>
       </div>
