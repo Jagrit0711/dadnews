@@ -8,7 +8,6 @@ import { DadAvatar } from "./DadAvatar";
 import { Navigation } from "./Navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { mockNewsData } from "../data/mockNewsData";
-import { toast } from "sonner";
 
 interface LayoutProps {
   children: ReactNode;
@@ -21,50 +20,15 @@ export function Layout({ children }: LayoutProps) {
   const [showDadAvatar, setShowDadAvatar] = useState(false);
   const [currentSuggestion, setCurrentSuggestion] = useState("");
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [lastInteraction, setLastInteraction] = useState(Date.now());
   const isMobile = useIsMobile();
-
-  // Function to update user engagement and dad's mood
-  const updateEngagement = (increment: boolean) => {
-    setUserEngagement(prev => {
-      const newValue = increment 
-        ? Math.min(prev + 10, 100) 
-        : Math.max(prev - 5, 0);
-      
-      // Show appropriate toast based on engagement level change
-      if (increment) {
-        if (newValue >= 80) {
-          toast("Dad is proud of you for staying informed!", {
-            icon: "👨‍🦳👍",
-          });
-        }
-      } else {
-        if (newValue <= 20) {
-          toast("Dad is disappointed in your lack of interest...", {
-            icon: "👨‍🦳👎",
-          });
-        }
-      }
-      
-      return newValue;
-    });
-  };
 
   useEffect(() => {
     const handleScroll = () => {
       const position = window.scrollY;
       setScrollPosition(position);
       
-      // Determine if it's time to show Dad Avatar
-      const now = Date.now();
-      const timeSinceLastInteraction = now - lastInteraction;
-      
-      // Only show after some scrolling and if it's been at least 30 seconds since last interaction
-      // and with a random chance
-      if (position > 200 && 
-          timeSinceLastInteraction > 30000 && 
-          Math.random() < 0.2 && 
-          !showDadAvatar) {
+      // Randomly show Dad Avatar while scrolling
+      if (position > 200 && Math.random() < 0.1 && !showDadAvatar) {
         const randomNews = mockNewsData[Math.floor(Math.random() * mockNewsData.length)];
         setCurrentSuggestion(`Hey! You should check out "${randomNews.title}"`);
         setShowDadAvatar(true);
@@ -73,7 +37,7 @@ export function Layout({ children }: LayoutProps) {
     
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [showDadAvatar, lastInteraction]);
+  }, [showDadAvatar]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -82,31 +46,18 @@ export function Layout({ children }: LayoutProps) {
   const handleArticleRead = (newsId: string) => {
     if (!readArticles.includes(newsId)) {
       setReadArticles([...readArticles, newsId]);
-      updateEngagement(true);
-      setLastInteraction(Date.now());
+      setUserEngagement(prev => Math.min(prev + 10, 100));
     }
   };
 
   const handleDadAvatarAction = (action: "read" | "ignore") => {
     if (action === "read") {
-      updateEngagement(true);
+      setUserEngagement(prev => Math.min(prev + 5, 100));
     } else {
-      updateEngagement(false);
+      setUserEngagement(prev => Math.max(prev - 5, 0));
+      setShowDadAvatar(false);
     }
-    
-    setShowDadAvatar(false);
-    setLastInteraction(Date.now());
   };
-
-  // Export state for other components to use
-  useEffect(() => {
-    // Make user engagement available to other components using window
-    window.dadAI = {
-      userEngagement,
-      readArticles,
-      updateEngagement
-    };
-  }, [userEngagement, readArticles]);
 
   return (
     <SidebarProvider>
@@ -127,7 +78,6 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </div>
         
-        {/* Only show the popup avatar when needed, not duplicating with navbar */}
         <DadAvatar 
           isVisible={showDadAvatar}
           suggestion={currentSuggestion}
@@ -136,15 +86,4 @@ export function Layout({ children }: LayoutProps) {
       </div>
     </SidebarProvider>
   );
-}
-
-// Add global type definitions for window
-declare global {
-  interface Window {
-    dadAI?: {
-      userEngagement: number;
-      readArticles: string[];
-      updateEngagement: (increment: boolean) => void;
-    };
-  }
 }
