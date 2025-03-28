@@ -5,7 +5,6 @@ import { Layout } from "@/components/Layout";
 import { mockNewsData } from "@/data/mockNewsData";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { WeatherWidget } from "@/components/WeatherWidget";
 import { CommentSection } from "@/components/CommentSection";
 import { DadRating } from "@/components/DadRating";
 import { ShareButtons } from "@/components/ShareButtons";
@@ -83,7 +82,6 @@ const ArticleDetail = () => {
           </div>
 
           <div className="space-y-6">
-            <WeatherWidget />
             <Card className="p-4 rounded-brutalist border-2 border-brutalist">
               <h3 className="font-brutalist text-xl mb-4">Related Articles</h3>
               <div className="space-y-4">

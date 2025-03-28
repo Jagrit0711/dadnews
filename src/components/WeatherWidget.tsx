@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Sun, CloudSun, CloudRain, CloudSnow, CloudFog } from "lucide-react";
@@ -80,8 +81,8 @@ export function WeatherWidget() {
   // Compact version for header
   if (isCompact) {
     return (
-      <div className="weather-widget flex items-center bg-card rounded-brutalist px-3 py-1 border border-brutalist">
-        <WeatherIcon className="text-brutalist mr-2" size={18} />
+      <div className="weather-widget flex items-center bg-secondary dark:bg-brutalist-secondary rounded-brutalist px-3 py-1 border border-brutalist">
+        <WeatherIcon className="text-brutalist dark:text-white mr-2" size={18} />
         <span className="font-brutalist">{temperature}°F</span>
       </div>
     );
@@ -89,10 +90,10 @@ export function WeatherWidget() {
 
   // Regular version for sidebar
   return (
-    <Card className="weather-widget p-4 rounded-brutalist border-2 border-brutalist shadow-brutalist bg-gradient-to-b from-card to-secondary/80">
+    <Card className="weather-widget p-4 rounded-brutalist border-2 border-brutalist shadow-brutalist bg-gradient-to-b from-card to-secondary/80 dark:from-brutalist-secondary dark:to-brutalist-secondary/80">
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-brutalist text-xl">Dad Weather Report</h3>
-        <WeatherIcon className="text-brutalist" size={28} />
+        <WeatherIcon className="text-brutalist dark:text-white" size={28} />
       </div>
       
       <div className="flex items-end mb-2">
@@ -100,7 +101,7 @@ export function WeatherWidget() {
         <span className="ml-2 text-sm text-muted-foreground capitalize">{weather.type}</span>
       </div>
       
-      <p className="text-sm italic border-t border-brutalist/20 pt-2 dad-ai-message">
+      <p className="text-sm italic border-t border-brutalist/20 pt-2 dad-ai-message dark:bg-brutalist-secondary/50">
         "{phrase}"
       </p>
     </Card>
