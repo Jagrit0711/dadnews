@@ -44,7 +44,7 @@ We’re not trying to replace news giants — we’re trying to make you laugh, 
 ## ⚙️ How It Works
 
 1. **Upload News**  
-   A new article (headline, summary, source link) is added via the backend panel.
+   A new article (headline, summary, source link) is utomatically added through a new api.
 
 2. **Dad Reviews**  
    The article is hidden by default until approved by the admin (*a.k.a. dad*).
@@ -68,3 +68,5 @@ To run Dad News locally:
 ```bash
 git clone https://github.com/Jagrit0711/dadnews.git
 cd dadnews
+
+note: the live url doesn't work it just basic u need to download and clone the repo then run it on local host to see the news and all cu the api provider doesn't support live url it only supports local host for the free plan 
