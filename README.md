@@ -1,69 +1,70 @@
-# Welcome to your Lovable project
+# 👨‍👦 Dad News
 
-## Project info
+> *"Underdog Team Wins Championship in Stunning Upset — this is critical reading!"*  
+Welcome to **Dad News** – a quirky, Gen-Z-friendly news site that makes staying informed actually fun. No more boring headlines and cluttered layouts — just curated content that *dad approves* and sends your way with hilarious, random comments.
 
-**URL**: https://lovable.dev/projects/380c6334-9e95-481e-b969-662c7395f29e
+🟢 [Visit Live Site](https://dadnews.vercel.app/)  
+📦 [View Source Code](https://github.com/Jagrit0711/dadnews)
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🧠 What Is Dad News?
 
-**Use Lovable**
+**Dad News** is a playful news delivery platform where *each news article is reviewed and approved manually* in the backend before it reaches readers. Think of it as a fun take on content moderation, where "dad" ensures you only see quality (and often critical!) reads.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/380c6334-9e95-481e-b969-662c7395f29e) and start prompting.
+We’re not trying to replace news giants — we’re trying to make you laugh, think, and stay informed without the pressure.
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🔑 Highlights:
+- 🧓 **Dad-curated content**: News only shows after dad approves it.
+- 💬 **Random dad messages**: From _"READ IT!"_ to _"Save this one, it's gold."_
+- 📱 **Mobile-friendly, GenZ UI**: Clean design with zero clutter.
+- ⏳ **Read at your own pace**: Dad’s got your back — no doomscrolling here.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🖼️ Screenshot
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+> *(Add screenshot here or use a hosted image)*
 
-Follow these steps:
+![Dad News Preview](https://dadnews.vercel.app/ogimage.png)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🛠️ Tech Stack
 
-# Step 3: Install the necessary dependencies.
-npm i
+| Layer         | Tech                     |
+|---------------|--------------------------|
+| Frontend      | Next.js + Tailwind CSS   |
+| Backend       | Firebase / Admin Panel (custom logic for approval) |
+| Deployment    | Vercel                   |
+| Hosting & DB  | Firebase (Firestore) / JSON API *(optional for local testing)* |
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+## ⚙️ How It Works
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. **Upload News**  
+   A new article (headline, summary, source link) is added via the backend panel.
 
-**Use GitHub Codespaces**
+2. **Dad Reviews**  
+   The article is hidden by default until approved by the admin (*a.k.a. dad*).
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+3. **Frontend Displays**  
+   Once approved, it shows on the homepage with a random dad message like:
+   - `"READ IT LATER – trust me!"`
+   - `"Dad says: This is critical reading!"`
+   - `"Don’t skip this one, champ."`
 
-## What technologies are used for this project?
+4. **Readers Chill & Browse**  
+   Readers can browse these fun but insightful news articles without distractions.
 
-This project is built with .
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🔧 Getting Started
 
-## How can I deploy this project?
+To run Dad News locally:
 
-Simply open [Lovable](https://lovable.dev/projects/380c6334-9e95-481e-b969-662c7395f29e) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+### 1. Clone the Repo
+```bash
+git clone https://github.com/Jagrit0711/dadnews.git
+cd dadnews
